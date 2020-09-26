@@ -13,7 +13,7 @@ const app = express();
 mongoose.connect('mongodb://localhost/test4', { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
 con.on('open', () => {
-    Book.deleteMany();
+    Book.deleteMany(()=>{console.log('connect, DB clean :)')});
 });
 
 app.use(bodyParser.json());
