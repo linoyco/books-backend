@@ -1,13 +1,23 @@
-const mongoConnect = require('./lib/db');
+const mongoose = require('mongoose');
 
-class Book {
-    constructor(id, bookName, author, publisher, imageURL) {
-        this.id = id;
-        this.bookName = bookName;
-        this.author = author;
-        this.publisher = publisher;
-        this.imageURL = imageURL;
+const bookSchema = new mongoose.Schema({
+    
+    bookName: {
+        type: String,
+        required: true,
+    },
+    author: {
+        type: String,
+        required: true,
+    },
+    publisher: {
+        type: String,
+        required: true,
+    },
+    imageURL: {
+        type: String,
+        required: true,
     }
+});
 
-
-}
+module.exports = mongoose.model('book', bookSchema);
