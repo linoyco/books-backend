@@ -8,6 +8,9 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
     console.log(req.body);
+    if (req.body.name === 'linoy') {
+        res.redirect('/admin');
+    }
     res.redirect('/user');
 });
 
