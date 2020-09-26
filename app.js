@@ -7,13 +7,32 @@ const userRoutes = require('./routes/user');
 const loginRoutes = require('./routes/login');
 const freeRoutes = require('./routes/free');
 const Book = require('./models/book');
+const DemoList = require('./lib/demoBooks');
 
 const app = express();
 
 mongoose.connect('mongodb://localhost/test4', { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
-con.on('open', () => {
-    Book.deleteMany(()=>{console.log('connect, DB clean :)')});
+
+con.on('open', async () => {
+    await Book.deleteMany(() => { console.log('connect, DB clean :)') });
+
+    for (let demo of DemoList) {
+        const book = new Book({
+            bookName: demo.bookName,
+            author: {
+                fullName: demo.author.fullName,
+                age: demo.author.age
+            },
+            publisher: {
+                publisherName: demo.publisher.publisherName,
+                year: demo.publisher.year
+            },
+            price: demo.price,
+            imageURL: demo.imageURL
+        });
+        await book.save();
+    }
 });
 
 app.use(bodyParser.json());
