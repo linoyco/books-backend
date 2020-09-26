@@ -25,7 +25,8 @@ router.post('/add-book', async (req, res, next) => {
                 year: req.body.publisher.year
             },
             price: req.body.price,
-            imageURL: req.body.imageURL
+            imageURL: req.body.imageURL,
+            stars: Math.random() * 5
         });
         const newBook = await book.save();
         res.json(newBook);
@@ -44,6 +45,7 @@ router.patch('/update-book/:id', async (req, res, next) => {
         book.publisher = req.body.publisher;
         book.imageURL = req.body.imageURL;
         book.price = req.body.price;
+        book.stars = req.body.stars;
 
         const bookUpdated = await book.save();
         res.json(bookUpdated);

@@ -25,7 +25,7 @@ const bookSchema = new mongoose.Schema({
     },
     stars: {
         type: Number,
-        default: Math.random() * 5
+        required: true
     }
 });
 

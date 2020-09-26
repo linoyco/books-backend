@@ -29,7 +29,8 @@ con.on('open', async () => {
                 year: demo.publisher.year
             },
             price: demo.price,
-            imageURL: demo.imageURL
+            imageURL: demo.imageURL,
+            stars: Math.random() * 5
         });
         await book.save();
     }
