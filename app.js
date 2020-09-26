@@ -6,13 +6,14 @@ const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
 const loginRoutes = require('./routes/login');
 const freeRoutes = require('./routes/free');
+const Book = require('./models/book');
 
 const app = express();
 
 mongoose.connect('mongodb://localhost/test4', { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
 con.on('open', () => {
-    console.log('connected!! :)');
+    Book.deleteMany();
 });
 
 app.use(bodyParser.json());
