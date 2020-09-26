@@ -32,12 +32,12 @@ router.post('/add-book', async (req, res, next) => {
 router.patch('/update-book/:id', async (req, res, next) => {
     try {
         const book = await Book.findById(req.params.id);
-        book = {
-            bookName: req.body.bookName,
-            author: req.body.author,
-            publisher: req.body.publisher,
-            imageURL: req.body.imageURL
-        }
+
+        book.bookName = req.body.bookName;
+        book.author = req.body.author;
+        book.publisher = req.body.publisher;
+        book.imageURL = req.body.imageURL;
+
         const bookUpdated = await book.save();
         res.json(bookUpdated);
     } catch (err) {
