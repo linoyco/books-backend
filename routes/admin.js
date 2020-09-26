@@ -16,9 +16,16 @@ router.post('/add-book', async (req, res, next) => {
     try {
         const book = new Book({
             bookName: req.body.bookName,
-            author: req.body.author,
-            publisher: req.body.publisher,
-            imageURL: req.body.imageURL
+            author: {
+                fullName: req.body.author.fullName,
+                age: req.body.author.age
+            },
+            publisher: {
+                publisherName: req.body.publisher.publisherName,
+                year: req.body.publisher.year
+            },
+            imageURL: req.body.imageURL,
+            price: req.body.price
         });
         const newBook = await book.save();
         res.json(newBook);

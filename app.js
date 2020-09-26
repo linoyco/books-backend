@@ -9,7 +9,7 @@ const freeRoutes = require('./routes/free');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/Books', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
 con.on('open', () => {
     console.log('connected!! :)');

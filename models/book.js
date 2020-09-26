@@ -1,21 +1,31 @@
 const mongoose = require('mongoose');
+const Author = require('./author');
+const Publisher = require('./publisher');
 
 const bookSchema = new mongoose.Schema({
     bookName: {
         type: String,
-        required: true,
+        required: true
     },
     author: {
-        type: String,
-        required: true,
+        type: Author,
+        required: true
     },
     publisher: {
-        type: String,
-        required: true,
+        type: Publisher,
+        required: true
     },
     imageURL: {
         type: String,
-        required: true,
+        required: true
+    },
+    price: {
+        type: String,
+        required: true
+    },
+    stars: {
+        type: Number,
+        default: Math.random() * 5
     }
 });
 
