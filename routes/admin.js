@@ -24,14 +24,13 @@ router.post('/add-book', async (req, res, next) => {
                 publisherName: req.body.publisher.publisherName,
                 year: req.body.publisher.year
             },
-            imageURL: req.body.imageURL,
-            price: req.body.price
+            price: req.body.price,
+            imageURL: req.body.imageURL
         });
         const newBook = await book.save();
         res.json(newBook);
     } catch (err) {
         res.status(400).send(err);
-        console.log(err);
     }
 });
 
@@ -44,6 +43,7 @@ router.patch('/update-book/:id', async (req, res, next) => {
         book.author = req.body.author;
         book.publisher = req.body.publisher;
         book.imageURL = req.body.imageURL;
+        book.price = req.body.price;
 
         const bookUpdated = await book.save();
         res.json(bookUpdated);

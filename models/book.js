@@ -15,11 +15,11 @@ const bookSchema = new mongoose.Schema({
         type: Publisher,
         required: true
     },
-    imageURL: {
+    price: {
         type: String,
         required: true
     },
-    price: {
+    imageURL: {
         type: String,
         required: true
     },
