@@ -51,7 +51,7 @@ router.patch('/update-book', authToken, async (req, res) => {
 });
 
 //DELETE
-router.delete('/delete-book', authToken, async (req, res) => {
+router.patch('/delete-book', authToken, async (req, res) => {
     try {
         await Book.findById(req.body.bookId).deleteOne();
         res.status(200).send('this book deleted...');
