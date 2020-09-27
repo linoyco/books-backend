@@ -16,7 +16,6 @@ const con = mongoose.connection;
 
 con.on('open', async () => {
     await Book.deleteMany(() => { console.log('connect, DB clean :)') });
-
     for (let demo of DemoList) {
         const book = new Book({
             bookName: demo.bookName,

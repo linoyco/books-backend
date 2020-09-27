@@ -1,20 +1,12 @@
-const userType = {
-    permission: {
-        type: String,
-        required: true,
-    },
-    fullName: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    imageURL: {
-        type: String,
-        required: true,
-    }
-};
+const mongoose = require('mongoose');
+const Purchase = require('./purchase');
 
-module.exports = userType;
+const userSchema = new mongoose.Schema({
+    permission: String,
+    fullName: String,
+    token: String,
+    imageURL: String,
+    lastPurchase: Purchase
+});
+
+module.exports = mongoose.model('user', userSchema);

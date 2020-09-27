@@ -1,5 +1,7 @@
 const express = require('express');
 
+const User = require('../models/user');
+
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -10,16 +12,39 @@ router.get('/', (req, res, next) => {
     }
 });
 
-router.post('/', (req, res, next) => {
+//LOGIN AND SAVE USER
+router.post('/', async (req, res, next) => {
+    await User.deleteMany(() => { console.log('USERS clean :)') });
+
     try {
-        console.log(req.body);
-        if (req.body.name === 'linoy') {
-            return res.redirect('/admin');
+        let userPermission = 'Customer';
+
+        if (req.body.name === 'linoy cohen') {
+            userPermission = 'Admin'
         }
-        return res.redirect('/user');
+
+        const user = new User({
+            permission: userPermission,
+            fullName: req.body.name,
+            token: req.body.password,
+            imageURL: 'https://emojigraph.org/media/openmoji/winking-face_1f609.png',
+            lastPurchase: {
+                date: '',
+                bookId: ''
+            }
+        });
+
+        const saveUser = await user.save();
+        res.json(saveUser);
     } catch (err) {
         console.log('error --->>> ', err);
     }
 });
+
+
+
+//in login> delete USERS db, login, edit permission, save user.
+
+//log out> delete USER
 
 module.exports = router;
