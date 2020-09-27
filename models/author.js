@@ -1,12 +1,6 @@
 const authorType = {
-    fullName: {
-        type: String,
-        required: true,
-    },
-    age: {
-        type: String,
-        required: true
-    }
+    fullName: String,
+    age: String
 };
 
 module.exports = authorType;

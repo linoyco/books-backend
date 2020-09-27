@@ -1,12 +1,6 @@
 const publisherType = {
-    publisherName: {
-        type: String,
-        required: true,
-    },
-    year: {
-        type: String,
-        required: true
-    }
+    publisherName: String,
+    year: String,
 };
 
 module.exports = publisherType;
