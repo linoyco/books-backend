@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 });
 
 //LOGOUT
-router.delete('/logout', async (res) => {
+router.delete('/logout', async (req, res) => {
     try {
         await User.deleteMany(() => { console.log('USERS clean :)') });
         res.status(200).send('bye bye...');
