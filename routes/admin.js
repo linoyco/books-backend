@@ -32,9 +32,9 @@ router.post('/add-book', authToken, async (req, res) => {
 });
 
 //UPDATE
-router.patch('/update-book/:id', authToken, async (req, res) => {
+router.patch('/update-book', authToken, async (req, res) => {
     try {
-        const book = await Book.findById(req.params.id);
+        const book = await Book.findById(req.body.bookId);
 
         book.bookName = req.body.bookName;
         book.author = req.body.author;
@@ -51,9 +51,9 @@ router.patch('/update-book/:id', authToken, async (req, res) => {
 });
 
 //DELETE
-router.delete('/delete-book/:id', authToken, async (req, res) => {
+router.delete('/delete-book', authToken, async (req, res) => {
     try {
-        await Book.findById(req.params.id).deleteOne();
+        await Book.findById(req.body.bookId).deleteOne();
         res.status(200).send('this book deleted...');
     } catch (err) {
         res.status(400).send(err);
