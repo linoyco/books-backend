@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 
 const User = require('../models/user');
 const Book = require('../models/book');
@@ -48,7 +49,7 @@ router.get('/:bookId', async (req, res, next) => {
 router.patch('/purchase-book/:id', authToken, async (req, res, next) => {
     try {
         let user = await User.find();
-        user[0].lastPurchase = { date: req.body.date, bookId: req.params.id }
+        user[0].lastPurchase = { date: moment().format('MMMM Do YYYY, h:mm'), bookId: req.params.id }
 
         const userUpdated = await user[0].save();
         res.json(userUpdated);
