@@ -13,16 +13,6 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-//GET ONE
-router.get('/:id', async (req, res, next) => {
-    try {
-        const book = await Book.findById(req.params.id);
-        res.json(book);
-    } catch (err) {
-        res.status(400).send('error --->>> ', err);
-    }
-});
-
 // SEARCH
 router.post('/search', async (req, res, next) => {
     try {
