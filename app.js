@@ -4,6 +4,20 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
+module.exports = authToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token === null) {
+        return res.status(401).send('No token');
+    }
+    jwt.verify(token, process.env.ACESS_TOKEN_SECRET, (err, name) => {
+        if (err) {
+            return res.status(403).send('invalid token');
+        }
+        next();
+    });
+}
+
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
 const loginRoutes = require('./routes/login');
@@ -37,20 +51,6 @@ con.on('open', async () => {
     }
 });
 
-const authToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token === null) {
-        return res.status(401).send('No token');
-    }
-    jwt.verify(token, process.env.ACESS_TOKEN_SECRET, (err, name) => {
-        if (err) {
-            return res.status(403).send('invalid token');
-        }
-        next();
-    });
-}
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -64,5 +64,3 @@ app.use((req, res, next) => {
 });
 
 app.listen(9000);
-
-// exports.authToken = authToken;

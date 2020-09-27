@@ -1,31 +1,9 @@
 const express = require('express');
+
 const Book = require('../models/book');
+const authToken = require('../app');
 
 const router = express.Router();
-
-
-
-
-//*******************************
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-
-const authToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token === null) {
-        return res.status(401).send('No token');
-    }
-    jwt.verify(token, process.env.ACESS_TOKEN_SECRET, (err, name) => {
-        if (err) {
-            return res.status(403).send('invalid token');
-        }
-        next();
-    });
-}
-//*******************************
-
-
 
 router.get('/', authToken, (req, res, next) => {
     try {
