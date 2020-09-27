@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
@@ -26,6 +27,7 @@ const Book = require('./models/book');
 const DemoList = require('./lib/demoBooks');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect('mongodb://localhost/test4', { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection;
