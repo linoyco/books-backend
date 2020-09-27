@@ -35,14 +35,8 @@ con.on('open', async () => {
     for (let demo of DemoList) {
         const book = new Book({
             bookName: demo.bookName,
-            author: {
-                fullName: demo.author.fullName,
-                age: demo.author.age
-            },
-            publisher: {
-                publisherName: demo.publisher.publisherName,
-                year: demo.publisher.year
-            },
+            author: demo.author,
+            publisher: demo.publisher,
             price: demo.price,
             imageURL: demo.imageURL,
             stars: Math.random() * 5
@@ -59,7 +53,7 @@ app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
 
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send('<h1>Page not found...!!</h1>');
 });
 

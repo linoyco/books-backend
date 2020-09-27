@@ -18,14 +18,8 @@ router.post('/add-book', authToken, async (req, res) => {
     try {
         const book = new Book({
             bookName: req.body.bookName,
-            author: {
-                fullName: req.body.author.fullName,
-                age: req.body.author.age
-            },
-            publisher: {
-                publisherName: req.body.publisher.publisherName,
-                year: req.body.publisher.year
-            },
+            author: req.body.author,
+            publisher: req.body.publisher,
             price: req.body.price,
             imageURL: req.body.imageURL,
             stars: Math.random() * 5
