@@ -5,7 +5,7 @@ const authToken = require('../app');
 
 const router = express.Router();
 
-router.get('/', authToken, (res) => {
+router.get('/', authToken, (req, res) => {
     try {
         res.send('<h1>Welcome Admin!!</h1>');
     } catch (err) {
