@@ -3,7 +3,31 @@ const Book = require('../models/book');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+
+
+
+//*******************************
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+
+const authToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token === null) {
+        return res.status(401).send('No token');
+    }
+    jwt.verify(token, process.env.ACESS_TOKEN_SECRET, (err, name) => {
+        if (err) {
+            return res.status(403).send('invalid token');
+        }
+        next();
+    });
+}
+//*******************************
+
+
+
+router.get('/', authToken, (req, res, next) => {
     try {
         res.send('<h1>Welcome Admin!!</h1>');
     } catch (err) {
@@ -12,7 +36,7 @@ router.get('/', (req, res, next) => {
 });
 
 //CREATE
-router.post('/add-book', async (req, res, next) => {
+router.post('/add-book', authToken, async (req, res, next) => {
     try {
         const book = new Book({
             bookName: req.body.bookName,
@@ -36,7 +60,7 @@ router.post('/add-book', async (req, res, next) => {
 });
 
 //UPDATE
-router.patch('/update-book/:id', async (req, res, next) => {
+router.patch('/update-book/:id', authToken, async (req, res, next) => {
     try {
         const book = await Book.findById(req.params.id);
 
@@ -55,7 +79,7 @@ router.patch('/update-book/:id', async (req, res, next) => {
 });
 
 //DELETE
-router.delete('/delete-book/:id', async (req, res, next) => {
+router.delete('/delete-book/:id', authToken, async (req, res, next) => {
     try {
         await Book.findById(req.params.id).deleteOne();
         res.status(200).send('this book deleted...');

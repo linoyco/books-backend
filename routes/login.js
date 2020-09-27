@@ -1,5 +1,4 @@
 const express = require('express');
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
@@ -25,10 +24,12 @@ router.post('/', async (req, res, next) => {
             userPermission = 'Admin'
         }
 
+        const token = jwt.sign(req.body.name, process.env.ACESS_TOKEN_SECRET)
+
         const user = new User({
             permission: userPermission,
             fullName: req.body.name,
-            token: req.body.password,
+            token: token,
             imageURL: 'https://emojigraph.org/media/openmoji/winking-face_1f609.png',
             lastPurchase: {
                 date: '',

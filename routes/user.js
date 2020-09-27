@@ -2,8 +2,29 @@ const express = require('express');
 
 const User = require('../models/user');
 const Book = require('../models/book');
+// const app = require('../app');
 
 const router = express.Router();
+
+
+//*******************************
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+
+const authToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token === null) {
+        return res.status(401).send('No token');
+    }
+    jwt.verify(token, process.env.ACESS_TOKEN_SECRET, (err, name) => {
+        if (err) {
+            return res.status(403).send('invalid token');
+        }
+        next();
+    });
+}
+//*******************************
 
 router.get('/', (req, res, next) => {
     try {
@@ -24,7 +45,7 @@ router.get('/:bookId', async (req, res, next) => {
 });
 
 //PURCHASE BOOK
-router.patch('/purchase-book/:id', async (req, res, next) => {
+router.patch('/purchase-book/:id', authToken, async (req, res, next) => {
     try {
         let user = await User.find();
         user[0].lastPurchase = { date: req.body.date, bookId: req.params.id }
