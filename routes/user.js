@@ -16,7 +16,7 @@ router.get('/', authToken, async (req, res) => {
 });
 
 //LAST PURCHASE
-router.get('/last-purchase', authToken, async (req, res) => {
+router.patch('/last-purchase', authToken, async (req, res) => {
     try {
         const book = await Book.findById(req.body.bookId);
         res.json(book);
