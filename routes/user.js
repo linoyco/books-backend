@@ -7,29 +7,29 @@ const authToken = require('../app');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', authToken, (res) => {
     try {
         res.send('<h1>Welcome User!!</h1>');
     } catch (err) {
-        console.log('error --->>> ', err);
+        res.status(400).send(err);
     }
 });
 
 //LAST PURCHASE
-router.get('/:bookId', async (req, res, next) => {
+router.get('/:bookId', authToken, async (req, res) => {
     try {
         const book = await Book.findById(req.params.bookId);
         res.json(book);
     } catch (err) {
-        res.status(400).send('error --->>> ', err);
+        res.status(400).send(err);
     }
 });
 
 //PURCHASE BOOK
-router.patch('/purchase-book/:id', authToken, async (req, res, next) => {
+router.patch('/purchase-book/:bookId', authToken, async (req, res) => {
     try {
         let user = await User.find();
-        user[0].lastPurchase = { date: moment().format('MMMM Do YYYY, h:mm'), bookId: req.params.id }
+        user[0].lastPurchase = { date: moment().format('MMMM Do YYYY, h:mm'), bookId: req.params.bookId }
 
         const userUpdated = await user[0].save();
         res.json(userUpdated);

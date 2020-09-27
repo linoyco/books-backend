@@ -5,21 +5,19 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', (res) => {
     try {
         res.send('<form action="/login" method="POST"><input type="text" name="name" placeholder="First Name"/><br/><input type="password" name="password" placeholder="Password"/><br/><button type="submit">Log-in</button></form>');
     } catch (err) {
-        console.log('error --->>> ', err);
+        res.status(400).send(err);
     }
 });
 
 //LOGIN AND SAVE USER
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     await User.deleteMany(() => { console.log('USERS clean :)') });
-
     try {
         let userPermission = 'Customer';
-
         if (req.body.name === 'linoy cohen') {
             userPermission = 'Admin'
         }
@@ -40,14 +38,18 @@ router.post('/', async (req, res, next) => {
         const saveUser = await user.save();
         res.json(saveUser);
     } catch (err) {
-        console.log('error --->>> ', err);
+        res.status(400).send(err);
     }
 });
 
-
-
-//in login> delete USERS db, login, edit permission, save user.
-
-//log out> delete USER
+//LOGOUT
+router.delete('/logout', async (res) => {
+    try {
+        await User.deleteMany(() => { console.log('USERS clean :)') });
+        res.status(200).send('bye bye...');
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
 
 module.exports = router;

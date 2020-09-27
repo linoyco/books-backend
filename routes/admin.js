@@ -5,16 +5,16 @@ const authToken = require('../app');
 
 const router = express.Router();
 
-router.get('/', authToken, (req, res, next) => {
+router.get('/', authToken, (res) => {
     try {
         res.send('<h1>Welcome Admin!!</h1>');
     } catch (err) {
-        console.log('error --->>> ', err);
+        res.status(400).send(err);
     }
 });
 
 //CREATE
-router.post('/add-book', authToken, async (req, res, next) => {
+router.post('/add-book', authToken, async (req, res) => {
     try {
         const book = new Book({
             bookName: req.body.bookName,
@@ -38,7 +38,7 @@ router.post('/add-book', authToken, async (req, res, next) => {
 });
 
 //UPDATE
-router.patch('/update-book/:id', authToken, async (req, res, next) => {
+router.patch('/update-book/:id', authToken, async (req, res) => {
     try {
         const book = await Book.findById(req.params.id);
 
@@ -57,7 +57,7 @@ router.patch('/update-book/:id', authToken, async (req, res, next) => {
 });
 
 //DELETE
-router.delete('/delete-book/:id', authToken, async (req, res, next) => {
+router.delete('/delete-book/:id', authToken, async (req, res) => {
     try {
         await Book.findById(req.params.id).deleteOne();
         res.status(200).send('this book deleted...');
