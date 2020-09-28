@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // SEARCH
-router.post('/search', async (req, res) => {
+router.patch('/search', async (req, res) => {
     try {
         let newList = [];
         const book = await Book.find({ bookName: new RegExp(req.body.q, 'i') });
