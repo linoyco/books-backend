@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(freeRoutes);
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
-app.use('/login', loginRoutes);
+app.use(loginRoutes);
 
 app.use((req, res) => {
     res.status(404).send('<h1>Page not found...!!</h1>');

@@ -5,16 +5,7 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    try {
-        res.send('<form action="/login" method="POST"><input type="text" name="name" placeholder="First Name"/><br/><input type="password" name="password" placeholder="Password"/><br/><button type="submit">Log-in</button></form>');
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-
-//LOGIN AND SAVE USER
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     await User.deleteMany(() => { console.log('USERS clean :)') });
     try {
         let userPermission = 'Customer';
@@ -42,7 +33,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-//LOGOUT
 router.delete('/logout', async (req, res) => {
     try {
         await User.deleteMany(() => { console.log('USERS clean :)') });
