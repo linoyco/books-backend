@@ -5,15 +5,6 @@ const authToken = require('../app');
 
 const router = express.Router();
 
-router.get('/', authToken, (req, res) => {
-    try {
-        res.send('<h1>Welcome Admin!!</h1>');
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-
-//CREATE
 router.post('/add-book', authToken, async (req, res) => {
     try {
         const book = new Book({
@@ -31,7 +22,6 @@ router.post('/add-book', authToken, async (req, res) => {
     }
 });
 
-//UPDATE
 router.patch('/update-book', authToken, async (req, res) => {
     try {
         const book = await Book.findById(req.body.bookId);
@@ -50,7 +40,6 @@ router.patch('/update-book', authToken, async (req, res) => {
     }
 });
 
-//DELETE
 router.patch('/delete-book', authToken, async (req, res) => {
     try {
         await Book.findById(req.body.bookId).deleteOne();

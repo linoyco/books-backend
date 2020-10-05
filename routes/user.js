@@ -7,15 +7,6 @@ const authToken = require('../app');
 
 const router = express.Router();
 
-router.get('/', authToken, async (req, res) => {
-    try {
-        res.send('<h1>Welcome User!!</h1>');
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-
-//LAST PURCHASE
 router.patch('/last-purchase', authToken, async (req, res) => {
     try {
         const book = await Book.findById(req.body.bookId);
@@ -25,7 +16,6 @@ router.patch('/last-purchase', authToken, async (req, res) => {
     }
 });
 
-//PURCHASE BOOK
 router.patch('/purchase-book', authToken, async (req, res) => {
     try {
         let user = await User.find();

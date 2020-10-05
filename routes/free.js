@@ -4,7 +4,6 @@ const Book = require('../models/book');
 
 const router = express.Router();
 
-//GET ALL
 router.get('/', async (req, res) => {
     try {
         const books = await Book.find();
@@ -14,7 +13,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// SEARCH
 router.patch('/search', async (req, res) => {
     try {
         let newList = [];
